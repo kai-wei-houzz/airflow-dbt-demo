@@ -1,0 +1,6 @@
+models:
+  - name: mp_metrics_hourly
+    columns:
+      - name: max_hr
+        tests:
+          - not_null

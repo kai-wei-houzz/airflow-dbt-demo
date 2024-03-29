@@ -1,0 +1,41 @@
+version: 2
+
+# models:
+  # - name: checkout_ids
+  #   description: Extract order_id, checkout_id from order_metrics_with_adjustments
+    # columns:
+    #   - name: customer_id
+    #     description: Primary key
+    #     tests:
+    #       - unique
+    #       - not_null
+    #   - name: first_order_date
+    #     description: NULL when a customer has not yet placed an order.
+
+sources:
+  - name: c2_hourly
+    schema: c2  
+    tables:
+      - name: order_attributes
+      - name: order_items
+      - name: orders
+      - name: professionals
+      - name: categories
+      - name: vendor_info
+  
+  - name: c2_daily
+    schema: c2  
+    tables:
+      - name: houses
+      - name: vendor_listings
+
+  - name: static
+    schema: mp_stg
+    tables:
+      - name: order_visitors_static
+
+  - name: mp
+    schema: mp
+    tables: 
+      - name: parent_category_lookup
+
