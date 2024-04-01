@@ -1,6 +1,20 @@
+# Airflow dbt Pipeline 
+## Desciption
+This is a demo project of using dbt to build a data pipeline and schedule with Airflow. 
+For the DBT project, please refer to here[].
+Steps include:
+1. Start a local Airflow with Astro
+2. Parse an existing dbt project into an Airflow DAG with cosmos
+
 ## Local Airflow Using Astro
-`brew install astro`
-`astro dev init`
+- Install Astro packages and initialize a new project
+```bash
+# We are all using Mac right?
+brew install astro
+
+# This will initialize the project with a basic structure
+astro dev init
+```
 
 - Modify docker file
 ```bash
@@ -21,7 +35,25 @@ astronomer-cosmos
 - Add reuqired connections
 
 - Stop the Airflow
+```
+astro dev stop
+```
+
+## Feedback
+### Pros
+- PRETTY COOL
+- Users can manage their own dependencies
+- Centrilize configuration, such as storage type. 
+    - can be defined by subfolders
+    - can be overwritten inside files
+    - Don't need extra DDL and can control table schema with yml files
+- Tests included
+
+### Cons
+- More tech stack
+- Airflow version 2.5
 
 
 ## Reference
 - Astro CLI: https://docs.astronomer.io/astro/cli/get-started-cli
+- Cosmos: https://astronomer.github.io/astronomer-cosmos/getting_started/open-source.html
