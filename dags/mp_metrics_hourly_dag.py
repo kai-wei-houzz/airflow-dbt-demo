@@ -1,6 +1,6 @@
 import os
 import pendulum
-from cosmos import DbtDag, ProjectConfig, ProfileConfig, ExecutionConfig
+from cosmos import DbtDag, ProjectConfig, ProfileConfig, ExecutionConfig, DbtTaskGroup
 from cosmos.profiles import PostgresUserPasswordProfileMapping, SparkThriftProfileMapping
 
 profile_config = ProfileConfig(
@@ -19,7 +19,8 @@ profile_config = ProfileConfig(
 my_cosmos_dag = DbtDag(
     project_config=ProjectConfig(
         dbt_project_path="/usr/local/airflow/dags/dbt/mp_metrics_hourly",
-        dbt_vars={"execution_date_pdt": "2024-03-28"}
+        dbt_vars={"execution_date_pdt": "{{ ds }}"}
+        # dbt_vars={"execution_date_pdt": "2024-03-30"}
     ),
     profile_config=profile_config,
     execution_config=ExecutionConfig(
@@ -32,3 +33,11 @@ my_cosmos_dag = DbtDag(
     dag_id="mp_metrics_hourly_cosmos",
     default_args={"retries": 2},
 )
+
+
+# -- {{ 
+# --     config(
+# --         materialized='table',
+# --         schema='dbt_prod'
+# --     )
+# -- }}
