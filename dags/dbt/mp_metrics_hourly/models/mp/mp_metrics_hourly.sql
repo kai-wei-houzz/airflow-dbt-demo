@@ -1,4 +1,12 @@
-{{ config(materialized='table') }}
+{{
+  config(
+    materialized='incremental',
+    incremental_strategy='insert_overwrite',
+    partition_by=['dt'],
+    pre_hook=["set hive.exec.dynamic.partition.mode=nonstrict", 'set spark.sql.sources.partitionOverwriteMode=DYNAMIC'],
+  )
+}}
+
 
 WITH max_hour AS (
     SELECT
@@ -35,7 +43,8 @@ SELECT
     sum(direct_gmv) AS direct_gmv,
     sum(take_rate_3p) take_rate_3p ,
     sum(CASE WHEN seller_type <> 0 AND cop_before_allowance = 0 THEN -0.593 * gmv ELSE cop_before_allowance END) AS cop_before_allowance,
-    sum(checkout_shipping) AS checkout_shipping
+    sum(checkout_shipping) AS checkout_shipping, 
+    "{{ var('execution_date_pdt') }}" AS dt
 FROM (
     SELECT
         o.order_id,
