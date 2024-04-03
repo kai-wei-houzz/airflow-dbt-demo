@@ -16,9 +16,12 @@ brew install astro
 astro dev init
 ```
 
-- Modify docker file
-```bash
+- Modify `Dockerfile`. We need 2 adapters in this example ([reference](https://docs.getdbt.com/docs/core/connect-data-platform/spark-setup)):
+    - `dbt-spark`: dbt core package and spark adapter
+    - `dbt-spark[PyHive]`: For connecting to Spark with Thrift
+```yaml
 # install dbt into a virtual environment
+# We need dbt-spark and 
 RUN python -m venv dbt_venv && source dbt_venv/bin/activate && \
     pip install --no-cache-dir <your-dbt-adapter> && deactivate
 ```
@@ -39,21 +42,31 @@ astronomer-cosmos
 astro dev stop
 ```
 
+## Note
+- Can always add config to overwrite the default in `dbt_project`
+```yaml
+# To materialze model as a table
+{{ config(materialized='table') }}
+```
 ## Feedback
 ### Pros
 - PRETTY COOL
 - Users can manage their own dependencies
-- Centrilize configuration, such as storage type. 
+- Centralize configuration, such as connections, storage type. 
     - can be defined by subfolders
     - can be overwritten inside files
     - Don't need extra DDL and can control table schema with yml files
-- Tests included
+- Data tests included
+- Able to integrate with existing operators
+- DS can focus on SQL
 
 ### Cons
-- More tech stack
-- Airflow version 2.5
+- More tech stack.
+- Require Airflow version 2.5 or above. 
 
 
 ## Reference
-- Astro CLI: https://docs.astronomer.io/astro/cli/get-started-cli
-- Cosmos: https://astronomer.github.io/astronomer-cosmos/getting_started/open-source.html
+- [Astro CLI](https://docs.astronomer.io/astro/cli/get-started-cli)
+- [Cosmos](https://astronomer.github.io/astronomer-cosmos/getting_started/open-source.html)
+- [DBT Spark Adapter](https://docs.getdbt.com/docs/core/connect-data-platform/spark-setup)
+- [Dag testing](https://docs.astronomer.io/learn/testing-airflow)

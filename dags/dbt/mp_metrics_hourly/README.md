@@ -5,6 +5,10 @@ Welcome to your new dbt project!
 Try running the following commands:
 - dbt run
 - dbt test
+- Documentation
+```bash
+dbt docs generate    
+```
 
 
 ### Resources:
