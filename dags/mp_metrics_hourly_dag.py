@@ -6,10 +6,6 @@ from cosmos.profiles import PostgresUserPasswordProfileMapping, SparkThriftProfi
 profile_config = ProfileConfig(
     profile_name="default",
     target_name="dev",
-    # profile_mapping=PostgresUserPasswordProfileMapping(
-    #     conn_id="airflow_db",
-    #     profile_args={"schema": "public"},
-    # ),
     profile_mapping=SparkThriftProfileMapping(
         conn_id="spark_default",
         profile_args={"schema": "dbt_test"},
@@ -30,7 +26,7 @@ my_cosmos_dag = DbtDag(
     schedule_interval="@daily",
     start_date=pendulum.datetime(2023, 1, 1),
     catchup=False,
-    dag_id="mp_metrics_hourly_cosmos",
+    dag_id="mp_metrics_cosmos",
     default_args={"retries": 2},
 )
 
