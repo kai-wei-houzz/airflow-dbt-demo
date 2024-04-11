@@ -1,5 +1,5 @@
 # Airflow dbt Pipeline 
-## Desciption
+## Description
 This is a demo project of using dbt to build a data pipeline and schedule with Airflow. 
 For the DBT project, please refer to here[].
 Steps include:
